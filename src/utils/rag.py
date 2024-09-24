@@ -13,8 +13,8 @@ You are an AI Ethics Advisor specializing in ensuring ethical considerations in 
 
     You will be provided with context from AI ethics guidelines and frameworks. 
     Use this context to answer the question related to ethical considerations in technological development.
-    Your response should be precise, concise, and directly address the question. If the information is not available in the context, indicate that the answer is not available.
-    Do not introduce information not found in the context provided. Never hallucinate
+    Your response should be precise, concise, and directly address the question. If the information is not available in the context, indicate that the answer is not available and do not add additional information.
+    Do not introduce information not found in the context provided. Never hallucinate!
 
 Context: {context}
 Question: {input}
@@ -28,7 +28,8 @@ llm = ChatGroq(temperature=0,
                       api_key=config("GROQ_API_KEY"),)
 
 qdrant.VectorStore(collection_name="ai_ethics")
-retriever = qdrant.vector_store.as_retriever(search_kwargs={"k": 6})
+# use vector_store.as_retriever to create a retriever and filter the documents for length of page_content
+retriever = qdrant.vector_store.as_retriever(search_kwargs={"k": 5})
 
 combine_docs_chain = create_stuff_documents_chain(
     llm=llm,
